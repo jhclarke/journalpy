@@ -126,7 +126,6 @@ if os.path.exists(oldpath):
         old_journals=oldresults[key]
         filter_journals=prev_journals+old_journals
         current_journals=value
-        results_filtered=[]
         fresults_temp=remove_oldfiles(current_journals,filter_journals)
         results_filtered[key]=fresults_temp
     fresults=results_filtered
@@ -137,7 +136,6 @@ elif os.path.exists(writepath):
     for key,value in results_tot.items():
         prev_journals=prevresults[key]
         current_journals=value
-        results_filtered=[]
         fresults_temp=remove_oldfiles(current_journals,prev_journals)
         results_filtered[key]=fresults_temp
     fresults=results_filtered
