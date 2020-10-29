@@ -22,8 +22,8 @@ import shutil
 #--------------
 username = 'agathos'
 user_servername = 'GMail'
-user_send = 'james.h.clarke44@gmail.com'
-user_password = 'Pink2112afroman'
+user_send = ''
+user_password = ''
 user_reciever = 'jclarke@chaos.utexas.edu'
 user_recievername = 'James'
 #-------------
