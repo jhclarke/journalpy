@@ -20,12 +20,12 @@ import shutil
 #--------------
 # USER Input
 #--------------
-username = 'agathos'
-user_servername = 'GMail'
-user_send = ''
-user_password = ''
-user_reciever = 'jclarke@chaos.utexas.edu'
-user_recievername = 'James'
+username = '' # System username
+user_servername = 'GMail' # Gmail or whatever server you use
+user_send = '' # Email address to send from
+user_password = '' # Password to send email address
+user_reciever = '' # Email to send to
+user_recievername = '' # First name of recipient
 #-------------
 #-------------
 '''
@@ -38,7 +38,7 @@ with open(writepath, 'r') as json_file:
     fresults=json.load(json_file) # Dictionary with keys=journal and values=list(articles)
 
 values={'servername':user_servername,'sender':user_send,'password':user_password,'reciever':user_reciever,'recievername':user_recievername}
-### Credentials for sending email with UT account ###
+### Credentials for sending email with sender account ###
 if values['servername'] == "GMail":
     port = 465
     smtp_server = 'smtp.gmail.com'
@@ -88,6 +88,7 @@ body = """\
         <body>
             <p> Hi %s, <br><br>
                 Please find the journal findings for this period below.
+                ---
                 <br><br>
                 """ % (receivername) + papertext + """
                 --<br>

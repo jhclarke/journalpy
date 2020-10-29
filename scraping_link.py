@@ -15,12 +15,12 @@ from pathlib import Path
 #-------------------
 # USER input
 #-------------------
-username = 'agathos'
+username = '' # System username
+
 # Define keywords to match on
 keywords=['actin','protein','biomaterial','light-sheet','microscopy','myosin','actomyosin','control-theory','biofilm','laser','lithography','ligand','dymer','microtubules','optical trap','thermal noise imaging','neutrophil','mechanosensing','optical tweezers','phagocytosis','pseudomonas aeruginosa','bacterial swarming','swarming motility','swarming','active matter','bacillus subtilis','sliding motility','cross-link','filament network','surface tension','cellular mechanics','self-organization','self organization','percolative','self-assembly','self assembly']
-# Define journals to search
-# journals=['https://advances.sciencemag.org/rss/current.xml','https://www.nature.com/subjects/biophysics/srep.rss','http://feeds.nature.com/nphoton/rss/current','http://feeds.nature.com/srep/rss/current','https://iopscience.iop.org/journal/rss/1748-3190','https://www.journals.elsevier.com/journal-of-biotechnology/rss','https://www.journals.elsevier.com/biosensors-and-bioelectronics/rss','http://feeds.nature.com/nbt/rss/current','http://feeds.feedburner.com/acs/nalefd','http://feeds.feedburner.com/acs/abseba','https://www.journals.elsevier.com/biomaterials/rss']
 
+# Define journals to search
 journals={'Science Advances':'https://advances.sciencemag.org/rss/current.xml','Nature Biophysics':'https://www.nature.com/subjects/biophysics/srep.rss','Nature Photonics':'http://feeds.nature.com/nphoton/rss/current','Nature':'http://feeds.nature.com/srep/rss/current','IOP Science':'https://iopscience.iop.org/journal/rss/1748-3190','Journal of Biotechnology':'https://www.journals.elsevier.com/journal-of-biotechnology/rss','Biosensors and Bioelectronics':'https://www.journals.elsevier.com/biosensors-and-bioelectronics/rss','Nature Biotechnology':'http://feeds.nature.com/nbt/rss/current','ACS Nanoletters':'http://feeds.feedburner.com/acs/nalefd','ACS Biomaterials':'http://feeds.feedburner.com/acs/abseba','Biomaterials':'https://www.journals.elsevier.com/biomaterials/rss'}
 
 #----------------
@@ -112,12 +112,6 @@ if os.path.exists(writepath):
     with open(writepath, 'r') as json_file:
         prevresults=json.load(json_file)
 
-    # Append the previous results to the current journals
-    ## Notes: Need to have a journal-by-journal function to append 
-    ##        non-duplicate papers to the specifc journal.
-    ##        The main difference is that these operations will need to be 
-    ##        done for each journal, vs for the entire list of paper entries
-
 # Check if the _old.json file exists
 oldpath=r'/home/%s/Documents/python/scraping/data_old.json' % username
 if os.path.exists(oldpath):
@@ -126,10 +120,6 @@ if os.path.exists(oldpath):
 
 #Time to filter for duplicates & old files
 if os.path.exists(oldpath):
-    # for i in results_tot.values():
-    #     for papers in i:
-    #         fresults0=remove_duplicates(papers)
-    #         fresults=remove_oldfiles(fresults0,oldresults)
     results_filtered={}
     for key,value in results_tot.items():
         prev_journals=prevresults[key]
@@ -143,9 +133,6 @@ if os.path.exists(oldpath):
 
 
 elif os.path.exists(writepath):
-    # for i in results_tot.values():
-    #      for papers in i:
-    #          fresults=remove_duplicates(papers)
     results_filterd={}
     for key,value in results_tot.items():
         prev_journals=prevresults[key]
