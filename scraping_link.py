@@ -119,7 +119,7 @@ if os.path.exists(oldpath):
         oldresults=json.load(old_file)
 
 #Time to filter for duplicates & old files
-if os.path.exists(oldpath):
+if os.path.exists(oldpath) and os.path.exists(writepath):
     results_filtered={}
     for key,value in results_tot.items():
         prev_journals=prevresults[key]
