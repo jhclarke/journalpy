@@ -104,7 +104,9 @@ for key,value in journals.items():
         for i in keywords:
             if i in article['title'].lower():
                results.append(article)
-    results_tot[article_title]=results
+    # Filter Duplicates
+    results_filt=remove_duplicates(results)
+    results_tot[article_title]=results_filt
 
 # Check if the .json file exists
 writepath = r'/home/%s/Documents/python/scraping/data.json' % username
@@ -137,6 +139,16 @@ elif os.path.exists(writepath):
         prev_journals=prevresults[key]
         current_journals=value
         fresults_temp=remove_oldfiles(current_journals,prev_journals)
+        results_filtered[key]=fresults_temp
+    fresults=results_filtered
+
+elif os.path.exists(oldpath):
+    results_filtered={}
+    for key,value in results_tot.items():
+        old_journals=oldresults[key]
+        filter_journals=old_journals
+        current_journals=value
+        fresults_temp=remove_oldfiles(current_journals,filter_journals)
         results_filtered[key]=fresults_temp
     fresults=results_filtered
 
