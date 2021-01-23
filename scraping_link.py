@@ -20,6 +20,9 @@ username = '' # System username
 # Define keywords to match on
 keywords=['actin','protein','biomaterial','light-sheet','microscopy','myosin','actomyosin','control-theory','biofilm','laser','lithography','ligand','dymer','microtubules','optical trap','thermal noise imaging','neutrophil','mechanosensing','optical tweezers','phagocytosis','pseudomonas aeruginosa','bacterial swarming','swarming motility','swarming','active matter','bacillus subtilis','sliding motility','cross-link','filament network','surface tension','cellular mechanics','self-organization','self organization','percolative','self-assembly','self assembly']
 
+# Define words to explicitly skip
+skips=['News']
+
 # Define journals to search
 journals={'Science Advances':'https://advances.sciencemag.org/rss/current.xml','Nature Biophysics':'https://www.nature.com/subjects/biophysics/srep.rss','Nature Photonics':'http://feeds.nature.com/nphoton/rss/current','Nature':'http://feeds.nature.com/srep/rss/current','IOP Science':'https://iopscience.iop.org/journal/rss/1748-3190','Journal of Biotechnology':'https://www.journals.elsevier.com/journal-of-biotechnology/rss','Biosensors and Bioelectronics':'https://www.journals.elsevier.com/biosensors-and-bioelectronics/rss','Nature Biotechnology':'http://feeds.nature.com/nbt/rss/current','ACS Nanoletters':'http://feeds.feedburner.com/acs/nalefd','ACS Biomaterials':'http://feeds.feedburner.com/acs/abseba','Biomaterials':'https://www.journals.elsevier.com/biomaterials/rss'}
 
@@ -95,6 +98,7 @@ def remove_oldfiles(new,old):
 #------------------------
 #------------------------
 
+# Get new papers
 results_tot={}
 for key,value in journals.items():
     article_title=key
@@ -102,19 +106,20 @@ for key,value in journals.items():
     results=[]
     for article in articles_j:
         for i in keywords:
-            if i in article['title'].lower():
+            if i in article['title'].lower() and i.startswith(skips[0]) != True:
                results.append(article)
     # Filter Duplicates
     results_filt=remove_duplicates(results)
     results_tot[article_title]=results_filt
 
-# Check if the .json file exists
+
+# Check if the data.json file exists
 writepath = r'/home/%s/Documents/python/scraping/data.json' % username
 if os.path.exists(writepath):
     with open(writepath, 'r') as json_file:
         prevresults=json.load(json_file)
 
-# Check if the _old.json file exists
+# Check if the data_old.json file exists
 oldpath=r'/home/%s/Documents/python/scraping/data_old.json' % username
 if os.path.exists(oldpath):
     with open(oldpath, 'r') as old_file:
@@ -142,6 +147,7 @@ elif os.path.exists(writepath):
         results_filtered[key]=fresults_temp
     fresults=results_filtered
 
+
 elif os.path.exists(oldpath):
     results_filtered={}
     for key,value in results_tot.items():
@@ -151,6 +157,7 @@ elif os.path.exists(oldpath):
         fresults_temp=remove_oldfiles(current_journals,filter_journals)
         results_filtered[key]=fresults_temp
     fresults=results_filtered
+
 
 else:
     fresults=results_tot
